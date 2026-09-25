@@ -1,0 +1,21 @@
+[gd_resource type="Theme" format=3 uid="uid://c7jdgppvo803a"]
+
+[ext_resource type="FontFile" uid="uid://c17rw7ovb0awq" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-ExtraLight.ttf" id="1_sseto"]
+[ext_resource type="FontFile" uid="uid://damggxf817q08" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-Light.ttf" id="2_g7nsb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sseto"]
+bg_color = Color(0.1043325, 0.09216035, 0.13482547, 1)
+skew = Vector2(1, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7nsb"]
+bg_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+skew = Vector2(1, 0)
+anti_aliasing = false
+
+[resource]
+Button/font_sizes/font_size = 64
+Button/fonts/font = ExtResource("1_sseto")
+Button/styles/hover = SubResource("StyleBoxFlat_sseto")
+Button/styles/normal = SubResource("StyleBoxFlat_g7nsb")
+RichTextLabel/fonts/normal_font = ExtResource("2_g7nsb")

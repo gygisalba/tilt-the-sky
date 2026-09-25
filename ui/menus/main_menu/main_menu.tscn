@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://btnddokgoef2l"]
+
+[ext_resource type="Script" uid="uid://byirltvk741oo" path="res://ui/menus/main_menu/scripts/main_menu.gd" id="1_6s8a2"]
+[ext_resource type="Theme" uid="uid://c7jdgppvo803a" path="res://ui/themes/label.tres" id="2_ioe73"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" unique_id=97731673]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6s8a2")
+
+[node name="Panel" type="Panel" parent="." unique_id=1902329382]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1098046442]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1286173692]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer" unique_id=914034022]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme = ExtResource("2_ioe73")
+theme_override_font_sizes/normal_font_size = 128
+bbcode_enabled = true
+text = "[shake] TILT THE SKY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Start" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1652501844]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_ioe73")
+text = "START"
+
+[node name="Options" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1749295720]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_ioe73")
+text = "OPTIONS"
+
+[node name="Quit" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=88883375]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_ioe73")
+text = "QUIT"
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

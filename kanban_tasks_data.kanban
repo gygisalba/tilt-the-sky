@@ -1,0 +1,91 @@
+{
+	"categories": [
+		{
+			"uuid": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"title": "Task",
+			"color": "569eff"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "74802826-8508-4fd8-ace3-d56c2ead5736",
+			"title": "Todo",
+			"tasks": [
+				"9b58edea-ab7d-45ba-86df-db714187ffc8",
+				"24c73062-7721-40f3-a505-ec53a9a030b0",
+				"dff8db29-ec98-400d-81c3-e0102be86311",
+				"f0337599-56f1-4955-a5ae-213535b39276"
+			]
+		},
+		{
+			"uuid": "352d3dcc-9a22-4220-b806-dc4fd66e9dce",
+			"title": "Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "b0a5168a-7949-4882-995c-9cd6bdf1172e",
+			"title": "Done",
+			"tasks": [
+				"e7bf9f33-283a-4504-a34e-3de4f76fc5ca",
+				"3b189664-cb7e-4e2f-86eb-68ee4385e69e"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "9b58edea-ab7d-45ba-86df-db714187ffc8",
+			"title": "Dialogue with portraits",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "e7bf9f33-283a-4504-a34e-3de4f76fc5ca",
+			"title": "Main Menu",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "24c73062-7721-40f3-a505-ec53a9a030b0",
+			"title": "Pause Menu",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "dff8db29-ec98-400d-81c3-e0102be86311",
+			"title": "Attacking and HP system",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "f0337599-56f1-4955-a5ae-213535b39276",
+			"title": "Basic Enemies",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "3b189664-cb7e-4e2f-86eb-68ee4385e69e",
+			"title": "Loading Screen",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"74802826-8508-4fd8-ace3-d56c2ead5736"
+			],
+			[
+				"352d3dcc-9a22-4220-b806-dc4fd66e9dce"
+			],
+			[
+				"b0a5168a-7949-4882-995c-9cd6bdf1172e"
+			]
+		]
+	}
+}

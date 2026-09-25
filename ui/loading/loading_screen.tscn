@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bj1a42embcbvg"]
+
+[ext_resource type="Script" uid="uid://df8x5v6pw04lf" path="res://ui/loading/scripts/loading_screen.gd" id="1_3con0"]
+[ext_resource type="PackedScene" uid="uid://dfnxkbw76neqf" path="res://ui/loading/fading_panel/fading_panel.tscn" id="2_butmh"]
+[ext_resource type="FontFile" uid="uid://c17rw7ovb0awq" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-ExtraLight.ttf" id="3_xen5b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xen5b"]
+bg_color = Color(0.15847227, 0.15847233, 0.15847221, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7f4n"]
+bg_color = Color(0.40188825, 0.4664253, 1, 1)
+
+[sub_resource type="Theme" id="Theme_butmh"]
+ProgressBar/fonts/font = ExtResource("3_xen5b")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_xen5b")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_s7f4n")
+
+[node name="LoadingScreen" type="Control" unique_id=907023379]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3con0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1669989363]
+layer = 3
+
+[node name="FadingPanel" parent="CanvasLayer" unique_id=644373409 instance=ExtResource("2_butmh")]
+unique_name_in_owner = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/FadingPanel" unique_id=602214734]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/FadingPanel/MarginContainer" unique_id=1670339579]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/FadingPanel/MarginContainer/CenterContainer" unique_id=1852192355]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/FadingPanel/MarginContainer/CenterContainer/VBoxContainer" unique_id=1789091333]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "LOADING..."
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/FadingPanel/MarginContainer/CenterContainer/VBoxContainer" unique_id=307377338]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme = SubResource("Theme_butmh")
+value = 100.0

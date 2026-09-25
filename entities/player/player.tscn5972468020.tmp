@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://biodk8n7oyj67"]
+
+[ext_resource type="Script" uid="uid://bsefd4y2prvba" path="res://entities/player/scripts/player.gd" id="1_bls4j"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_sglur"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_bls4j"]
+[ext_resource type="Script" uid="uid://br6kvug100k04" path="res://entities/player/scripts/movement_component.gd" id="2_fkugw"]
+[ext_resource type="Script" uid="uid://d24yf8eot58mj" path="res://entities/player/scripts/camera_component.gd" id="3_8fjmc"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_fkugw"]
+[ext_resource type="Script" uid="uid://bhh1j88xsf1nh" path="res://entities/player/scripts/movement_speed_modifier_component.gd" id="3_wvtmh"]
+[ext_resource type="Script" uid="uid://bpanulkmce1k5" path="res://entities/player/scripts/jump_component.gd" id="4_7thud"]
+[ext_resource type="Script" uid="uid://bs7t2n2cah5ix" path="res://entities/player/scripts/player_state_component.gd" id="4_qiwj3"]
+[ext_resource type="Script" uid="uid://61kx8bvbiw5m" path="res://entities/player/scripts/mantle_component.gd" id="5_26q78"]
+[ext_resource type="Script" uid="uid://fk5wh71mvugw" path="res://entities/player/scripts/slide_component.gd" id="6_bectd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+height = 2.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fjmc"]
+albedo_color = Color(1, 0.39607844, 1, 1)
+
+[sub_resource type="Resource" id="Resource_8fjmc"]
+script = ExtResource("3_fkugw")
+
+[node name="Player" type="CharacterBody3D" unique_id=74201403]
+collision_mask = 54
+floor_snap_length = 0.4
+script = ExtResource("1_bls4j")
+
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=1982314308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12859416, 0)
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="Model" type="Node3D" parent="." unique_id=1162491221]
+
+[node name="Temporary" type="CSGCylinder3D" parent="Model" unique_id=1301097699]
+material_override = SubResource("StandardMaterial3D_8fjmc")
+
+[node name="Temporary2" type="CSGCylinder3D" parent="Model/Temporary" unique_id=1787355966]
+transform = Transform3D(1.9106855e-15, -4.371139e-08, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, -4.371139e-08, 0.0031141043, 0.39120677, 0.44221377)
+material_override = SubResource("StandardMaterial3D_8fjmc")
+height = 0.3416748
+
+[node name="Raycasts" type="Node3D" parent="Model" unique_id=2138788530]
+
+[node name="RayCastChest" type="RayCast3D" parent="Model/Raycasts" unique_id=1615476784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.030390203, 0, 0.4240409)
+target_position = Vector3(0, 0, 1)
+collision_mask = 2
+
+[node name="RayCastHead" type="RayCast3D" parent="Model/Raycasts" unique_id=927973323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.030390203, 1.3329953, 0.4240409)
+target_position = Vector3(0, 0, 1)
+collision_mask = 2
+
+[node name="Components" type="Node" parent="." unique_id=1563754300]
+
+[node name="MovementSpeedModifierComponent" type="Node" parent="Components" unique_id=1677041648]
+script = ExtResource("3_wvtmh")
+
+[node name="MovementComponent" type="Node" parent="Components" unique_id=101337582 node_paths=PackedStringArray("player", "camera", "model", "player_state", "slide", "speed_modifier")]
+script = ExtResource("2_fkugw")
+player = NodePath("../..")
+camera = NodePath("../../CameraGroup/CameraPivot/PhantomCamera3D")
+model = NodePath("../../Model")
+player_state = NodePath("../PlayerStateComponent")
+slide = NodePath("../SlideComponent")
+speed_modifier = NodePath("../MovementSpeedModifierComponent")
+
+[node name="JumpComponent" type="Node" parent="Components" unique_id=15762335 node_paths=PackedStringArray("player", "player_state", "slide")]
+script = ExtResource("4_7thud")
+player = NodePath("../..")
+player_state = NodePath("../PlayerStateComponent")
+slide = NodePath("../SlideComponent")
+
+[node name="SlideComponent" type="Node" parent="Components" unique_id=785443510 node_paths=PackedStringArray("player", "state")]
+script = ExtResource("6_bectd")
+player = NodePath("../..")
+state = NodePath("../PlayerStateComponent")
+
+[node name="MantleComponent" type="Node" parent="Components" unique_id=1749240372 node_paths=PackedStringArray("ray_chest", "ray_head", "movement", "state", "player")]
+script = ExtResource("5_26q78")
+ray_chest = NodePath("../../Model/Raycasts/RayCastChest")
+ray_head = NodePath("../../Model/Raycasts/RayCastHead")
+movement = NodePath("../MovementComponent")
+state = NodePath("../PlayerStateComponent")
+player = NodePath("../..")
+
+[node name="CameraComponent" type="Node" parent="Components" unique_id=633656761 node_paths=PackedStringArray("camera", "camera_pivot", "model")]
+script = ExtResource("3_8fjmc")
+camera = NodePath("../../CameraGroup/CameraPivot/PhantomCamera3D")
+camera_pivot = NodePath("../../CameraGroup/CameraPivot")
+model = NodePath("../../Model")
+
+[node name="PlayerStateComponent" type="Node" parent="Components" unique_id=58606190 node_paths=PackedStringArray("state_label")]
+script = ExtResource("4_qiwj3")
+state_label = NodePath("../../PlayerUI/StateLabel")
+
+[node name="CameraGroup" type="Node" parent="." unique_id=1406050078]
+
+[node name="CameraPivot" type="Node3D" parent="CameraGroup" unique_id=462089270]
+
+[node name="Camera3D" type="Camera3D" parent="CameraGroup/CameraPivot" unique_id=1398001316]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 3.8569713, 2.6730196)
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="CameraGroup/CameraPivot/Camera3D" unique_id=197406305]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_sglur")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera3D" type="Node3D" parent="CameraGroup/CameraPivot" unique_id=1753805340 node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 3.8569713, 2.6730196)
+script = ExtResource("2_bls4j")
+follow_mode = 6
+follow_target = NodePath("../../..")
+tween_resource = SubResource("Resource_8fjmc")
+follow_offset = Vector3(0, 2.495, 0)
+follow_damping = true
+follow_distance = 3.0
+vertical_rotation_offset = 0.47123889803846897
+spring_length = 3.0
+collision_mask = 2
+align_transform_with_view = Callable()
+align_position_with_view = Callable()
+align_rotation_with_view = Callable()
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="PlayerUI" type="CanvasLayer" parent="." unique_id=1534802610]
+
+[node name="StateLabel" type="RichTextLabel" parent="PlayerUI" unique_id=192157568]
+offset_right = 615.0
+offset_bottom = 69.0
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "STATE: "
