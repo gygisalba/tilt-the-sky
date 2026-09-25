@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b8doy63c18n08"]
 
 [ext_resource type="PackedScene" uid="uid://biodk8n7oyj67" path="res://entities/player/player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://bvqwnm14p1ogf" path="res://entities/common/hitbox/hitbox.tscn" id="2_pw63i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
 metallic = 0.65
@@ -150,3 +151,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9424242, 0.33442026, 0, -0.33442026, 0.942
 use_collision = true
 collision_layer = 2
 size = Vector3(36.178814, 0.87483597, 5.828617)
+
+[node name="Hitbox" parent="." unique_id=135541384 instance=ExtResource("2_pw63i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2404246, 0.050499916, 3.8337345)
+damage = 25.0

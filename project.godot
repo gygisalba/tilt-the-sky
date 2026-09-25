@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 PhantomCameraManager="*uid://duq6jhf6unyis"
 DialogueManager="*uid://c3rodes2l3gxb"
 LoadingManager="*uid://bgtti7snd6uci"
+PlayerManager="*uid://c4c2iuqc4guop"
 
 [display]
 

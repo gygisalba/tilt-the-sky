@@ -1,0 +1,14 @@
+[gd_resource type="Theme" format=3 uid="uid://bwf5joplin0n8"]
+
+[ext_resource type="FontFile" uid="uid://c17rw7ovb0awq" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-ExtraLight.ttf" id="1_x06kp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xen5b"]
+bg_color = Color(0.15847227, 0.15847233, 0.15847221, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7f4n"]
+bg_color = Color(0.40188825, 0.4664253, 1, 1)
+
+[resource]
+ProgressBar/fonts/font = ExtResource("1_x06kp")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_xen5b")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_s7f4n")

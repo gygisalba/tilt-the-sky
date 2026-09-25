@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://2uheb5mydivy"]
+
+[ext_resource type="Script" uid="uid://cvihq1aduw6td" path="res://entities/common/hurtbox/hurtbox.gd" id="1_auldd"]
+
+[node name="Area3D" type="Area3D" unique_id=923501376 node_paths=PackedStringArray("invincibility_timer")]
+script = ExtResource("1_auldd")
+invincibility_timer = NodePath("InvincibilityTimer")
+
+[node name="InvincibilityTimer" type="Timer" parent="." unique_id=955928592]
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

@@ -1,24 +1,24 @@
 extends RefCounted
 class_name ResourceUpdate
 
-var PreviousValue : float
-var CurrentValue : float
-var MaxValue : float
+var previous_value : float
+var current_value : float
+var max_value : float
 
-var ResourcePercentage: float:
+var resource_percentage: float:
 	get:
-		if MaxValue <= 0:
+		if max_value <= 0:
 			return 0.0
-		return clampf(CurrentValue / MaxValue, 0.0, 1.0)
+		return clampf(current_value / max_value, 0.0, 1.0)
 
-var IsIncrease: bool:
+var is_increase: bool:
 	get:
-		return CurrentValue > PreviousValue
+		return current_value > previous_value
 
-var Delta: float:
+var delta: float:
 	get:
-		return CurrentValue - PreviousValue
+		return current_value - previous_value
 
-var AbsoluteDelta: float:
+var absolute_delta: float:
 	get:
-		return abs(Delta)
+		return abs(delta)

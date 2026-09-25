@@ -15,7 +15,7 @@ class_name JumpComponent
 @export var jump_cut_multiplier := 0.4
 @export var coyote_time := 0.12
 @export var jump_buffer_time := 0.12
-@export var max_air_jumps := 2
+@export var max_air_jumps := 1
 @export var max_wall_jumps := 3
 @export var wall_jump_horizontal_speed := 18.0
 
@@ -69,7 +69,6 @@ func jump(on_floor: bool) -> void:
 
 	if coyote_timer > 0.0:
 		player.velocity.y = jump_speed
-		air_jumps_left -= 1
 		coyote_timer = 0.0
 		jump_buffer_timer = 0.0
 		is_double_jumping = false

@@ -36,11 +36,11 @@ func _get_resource() -> float:
 # to be overridden
 func _set_resource(value: float) -> void:
 	var resource_update = ResourceUpdate.new()
-	resource_update.MaxValue = max_resource
-	resource_update.PreviousValue = resource
+	resource_update.max_value = max_resource
+	resource_update.previous_value = resource
 	
 	_resource = clampf(value, 0.0, max_resource)
-	resource_update.CurrentValue = resource
+	resource_update.current_value = resource
 	
 	resource_changed.emit(resource_update)
 	

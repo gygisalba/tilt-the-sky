@@ -35,7 +35,7 @@ func _on_movement_speed_modifiers_updated(modifiers: Dictionary) -> void:
 	if modifiers.is_empty():
 		return
 	
-	var total_modifier : float
+	var total_modifier := 0.0
 	for modifier in modifiers.values():
 		total_modifier += modifier
 	
