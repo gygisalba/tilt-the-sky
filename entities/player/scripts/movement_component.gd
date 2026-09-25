@@ -9,10 +9,14 @@ class_name MovementComponent
 @export var speed_modifier: MovementSpeedModifierComponent
 
 @export_category("Movement")
-@export var base_speed := 15.0
+@export var base_speed := 25.0
 @export var acceleration := 80.0
 @export var deceleration := 100.0
-@export var air_acceleration := 40.0
+
+@export_category("Air Movement")
+@export var air_acceleration := 30.0
+@export var air_steering := 8.0
+@export var air_max_speed := 25.0
 
 var current_speed : float
 
@@ -139,20 +143,25 @@ func apply_air_control(
 	if direction == Vector3.ZERO:
 		return velocity
 
+	var directional_speed := velocity.dot(direction)
+
+	if directional_speed < air_max_speed:
+		var acceleration_amount := air_acceleration * delta
+		acceleration_amount = minf(
+			acceleration_amount,
+			air_max_speed - directional_speed
+		)
+
+		velocity += direction * acceleration_amount
+
 	var horizontal_speed := velocity.length()
 
-	if horizontal_speed <= 0.01:
-		return direction * air_acceleration * delta
+	if horizontal_speed > 0.01:
+		var desired_velocity := direction * horizontal_speed
 
-	var current_speed := velocity.dot(direction)
-	var acceleration_speed := current_speed + air_acceleration * delta
-	
-	var max_speed := maxf(horizontal_speed, current_speed)
-	acceleration_speed = minf(acceleration_speed, max_speed)
-	
-	var acceleration_amount := acceleration_speed - current_speed
+		velocity = velocity.lerp(
+			desired_velocity,
+			1.0 - exp(-air_steering * delta)
+		)
 
-	if acceleration_amount <=  0.0:
-		return velocity
-	
-	return velocity + direction * acceleration_amount
+	return velocity

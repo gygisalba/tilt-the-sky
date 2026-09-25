@@ -28,23 +28,38 @@ var slide_direction := Vector3.ZERO
 var slide_speed := 0.0
 var slide_timer := 0.0
 
+var was_on_floor := false
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("slide"):
+	var on_floor := player.is_on_floor()
+
+	if (
+		Input.is_action_just_pressed("slide")
+		and on_floor
+		and not is_sliding()
+	):
 		start_slide()
 
-	if not is_sliding():
-		return
+	elif (
+		on_floor
+		and not was_on_floor
+		and Input.is_action_pressed("slide")
+		and not is_sliding()
+	):
+		start_slide()
 
-	if not player.is_on_floor():
-		return
+	if is_sliding():
+		if not on_floor:
+			was_on_floor = on_floor
+			return
 
-	update_slide_timer(delta)
-	update_slide(delta)
+		update_slide_timer(delta)
+		update_slide(delta)
 
-	if Input.is_action_just_released("slide"):
-		stop_slide()
+		if Input.is_action_just_released("slide"):
+			stop_slide()
 
+	was_on_floor = on_floor
 
 func is_sliding() -> bool:
 	return state.is_player_state(
