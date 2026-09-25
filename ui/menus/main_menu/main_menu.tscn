@@ -47,7 +47,7 @@ layout_mode = 2
 theme = ExtResource("2_ioe73")
 theme_override_font_sizes/normal_font_size = 128
 bbcode_enabled = true
-text = "[shake] TILT THE SKY"
+text = "[shake] TILT -THE- SKIES"
 horizontal_alignment = 1
 vertical_alignment = 1
 

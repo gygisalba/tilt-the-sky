@@ -31,7 +31,6 @@ func _ready() -> void:
 
 func handle_jumping(on_floor: bool, delta: float) -> void:
 	if on_floor:
-		slide.handle_slide()
 		coyote_timer = coyote_time
 		air_jumps_left = max_air_jumps
 		wall_jumps_left = max_wall_jumps
@@ -67,30 +66,34 @@ func jump(on_floor: bool) -> void:
 	if jump_buffer_timer <= 0.0:
 		return
 
+	# Ground / Coyote jump
 	if coyote_timer > 0.0:
+		var was_sliding := player_state.is_player_state(
+			PlayerStateComponent.PlayerState.SLIDING
+		)
+
 		player.velocity.y = jump_speed
+
 		coyote_timer = 0.0
 		jump_buffer_timer = 0.0
 		is_double_jumping = false
-		if player_state.is_player_state(player_state.PlayerState.SLIDING):
-			var boost_dir := slide.slide_direction
-			boost_dir.y = 0.0
-			if boost_dir.length_squared() > 0.0001:
-				boost_dir = boost_dir.normalized()
-				var boosted_speed := slide.slide_speed + slide.jump_boost
-				player.velocity.x = boost_dir.x * boosted_speed
-				player.velocity.z = boost_dir.z * boosted_speed
-				player_state.set_player_state(player_state.PlayerState.IDLE)
+
+		if was_sliding:
+			player.velocity += slide.apply_slide_jump()
+
 		return
-		
-	if !on_floor:
-		if player.is_on_wall_only() and wall_jumps_left > 0:
-			wall_jump()
-		elif air_jumps_left > 0:
-			player.velocity.y = double_jump_speed
-			air_jumps_left -= 1
-			jump_buffer_timer = 0.0
-			is_double_jumping = true
+
+	# Wall jump
+	if !on_floor and player.is_on_wall_only() and wall_jumps_left > 0:
+		wall_jump()
+		return
+
+	# Double jump
+	if !on_floor and air_jumps_left > 0:
+		player.velocity.y = double_jump_speed
+		air_jumps_left -= 1
+		jump_buffer_timer = 0.0
+		is_double_jumping = true
 
 func wall_jump() -> void:
 	var wall_normal := player.get_wall_normal()

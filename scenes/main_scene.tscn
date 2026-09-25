@@ -9,10 +9,10 @@ metallic = 0.65
 [node name="MainScene" type="Node3D" unique_id=1690754072]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=165238651]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4995, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.381592, -0.4995, 0)
 use_collision = true
 collision_layer = 2
-size = Vector3(100, 0.1, 100)
+size = Vector3(593.48584, 0.1, 100)
 material = SubResource("StandardMaterial3D_pw63i")
 
 [node name="Player" parent="." unique_id=74201403 instance=ExtResource("1_w2twt")]
@@ -88,6 +88,12 @@ size = Vector3(14.311, 0.87483597, 18.792)
 
 [node name="CSGBox3D22" type="CSGBox3D" parent="." unique_id=1507464491]
 transform = Transform3D(0.11501949, -0.99336326, 0, 0.99336326, 0.11501949, 0, 0, 0, 1, 20.175886, 13.708897, 1.4457073)
+use_collision = true
+collision_layer = 2
+size = Vector3(14.311, 0.87483597, 18.792)
+
+[node name="CSGBox3D23" type="CSGBox3D" parent="." unique_id=1623530926]
+transform = Transform3D(0.81310076, 0.582123, 0, -0.582123, 0.81310076, 0, 0, 0, 1, -20.615618, 8.440966, 1.4457073)
 use_collision = true
 collision_layer = 2
 size = Vector3(14.311, 0.87483597, 18.792)

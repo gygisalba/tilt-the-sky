@@ -14,7 +14,6 @@
 [ext_resource type="Script" uid="uid://fk5wh71mvugw" path="res://entities/player/scripts/slide_component.gd" id="6_bectd"]
 [ext_resource type="Script" uid="uid://4c1vfxmatr5a" path="res://entities/player/scripts/dash_component.gd" id="6_j3ovn"]
 [ext_resource type="Script" uid="uid://dk28pf187i2k7" path="res://entities/common/scripts/health_component/health_component.gd" id="11_afbqv"]
-[ext_resource type="Script" uid="uid://ch5k7uudcpe48" path="res://entities/player/scripts/tail_physics_component.gd" id="11_gx6sm"]
 [ext_resource type="Script" uid="uid://jgceaiyogkns" path="res://entities/common/scripts/stamina_component/stamina_component.gd" id="12_gx6sm"]
 [ext_resource type="Theme" uid="uid://bwf5joplin0n8" path="res://ui/themes/loading_bar.tres" id="16_3wlsy"]
 [ext_resource type="Theme" uid="uid://c7jdgppvo803a" path="res://ui/themes/label.tres" id="16_b2kln"]
@@ -79,13 +78,12 @@ collision_mask = 2
 [node name="MovementSpeedModifierComponent" type="Node" parent="Components" unique_id=1677041648]
 script = ExtResource("3_wvtmh")
 
-[node name="MovementComponent" type="Node" parent="Components" unique_id=101337582 node_paths=PackedStringArray("player", "camera", "model", "player_state", "slide", "jump", "speed_modifier")]
+[node name="MovementComponent" type="Node" parent="Components" unique_id=101337582 node_paths=PackedStringArray("player", "camera", "model", "player_state", "jump", "speed_modifier")]
 script = ExtResource("2_fkugw")
 player = NodePath("../..")
 camera = NodePath("../../CameraGroup/CameraPivot/PhantomCamera3D")
 model = NodePath("../../Model")
 player_state = NodePath("../PlayerStateComponent")
-slide = NodePath("../SlideComponent")
 jump = NodePath("../JumpComponent")
 speed_modifier = NodePath("../MovementSpeedModifierComponent")
 
@@ -101,9 +99,10 @@ player = NodePath("../..")
 camera = NodePath("../../CameraGroup/CameraPivot/PhantomCamera3D")
 player_state = NodePath("../PlayerStateComponent")
 
-[node name="SlideComponent" type="Node" parent="Components" unique_id=785443510 node_paths=PackedStringArray("player", "state")]
+[node name="SlideComponent" type="Node" parent="Components" unique_id=785443510 node_paths=PackedStringArray("player", "camera", "state")]
 script = ExtResource("6_bectd")
 player = NodePath("../..")
+camera = NodePath("../../CameraGroup/CameraPivot/Camera3D")
 state = NodePath("../PlayerStateComponent")
 
 [node name="CameraComponent" type="Node" parent="Components" unique_id=633656761 node_paths=PackedStringArray("camera", "camera_pivot")]
@@ -121,11 +120,6 @@ script = ExtResource("11_afbqv")
 
 [node name="StaminaComponent" type="Node" parent="Components" unique_id=1175043731]
 script = ExtResource("12_gx6sm")
-
-[node name="TailPhysicsComponent" type="Node" parent="Components" unique_id=1000387372 node_paths=PackedStringArray("player")]
-script = ExtResource("11_gx6sm")
-player = NodePath("../..")
-tail_bone_names = Array[StringName]([&"DEF-tail.001", &"DEF-tail.002", &"DEF-tail.003", &"DEF-tail.004"])
 
 [node name="CameraGroup" type="Node" parent="." unique_id=1406050078]
 
@@ -183,7 +177,6 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="StateLabel" type="RichTextLabel" parent="PlayerUI/TopPanel/MarginContainer" unique_id=192157568]
-visible = false
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
