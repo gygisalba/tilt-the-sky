@@ -1,10 +1,10 @@
 extends ResourceComponent
-class_name PoiseComponent
+class_name BossPoiseComponent
 
 var poise: float:
 	get: return resource
 	set(value): resource = value
-
+	
 func has_poise_remaining() -> bool:
 	return has_resource_remaining()
 

@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://0q00jtnn2m5e" path="res://entities/player/scripts/target_lock_component.gd" id="16_t1t22"]
 [ext_resource type="Script" uid="uid://7g528kcx1amd" path="res://ui/hud/scripts/stat_ui_controller.gd" id="16_yqrof"]
 [ext_resource type="FontFile" uid="uid://c17rw7ovb0awq" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-ExtraLight.ttf" id="21_ghoj8"]
+[ext_resource type="Script" uid="uid://cucw17ylmvrtx" path="res://ui/hud/boss_stats/boss_stats_ui_controller.gd" id="22_50fht"]
 [ext_resource type="Theme" uid="uid://bf8b1dj0w31ia" path="res://ui/themes/boss_hp.tres" id="22_t1t22"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
@@ -116,7 +117,8 @@ unique_name_in_owner = true
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.5486083, 4.195002)
 collision_layer = 1
 collision_mask = 4
-damage = 25.0
+hp_damage = 1
+poise_damage = 10
 
 [node name="AttackCollider" type="CollisionShape3D" parent="Model/AttackHitbox" unique_id=1622328254]
 unique_name_in_owner = true
@@ -327,6 +329,9 @@ grow_horizontal = 0
 grow_vertical = 2
 theme = SubResource("Theme_221hk")
 
+[node name="BossStatsUIController" type="Node" parent="PlayerUI/BossPanel" unique_id=89377336]
+script = ExtResource("22_50fht")
+
 [node name="MarginContainer" type="MarginContainer" parent="PlayerUI/BossPanel" unique_id=1157324316]
 layout_mode = 1
 anchors_preset = 15
@@ -343,6 +348,7 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 
 [node name="PoiseBar" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer" unique_id=866403374]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 750)
 layout_mode = 2
 theme = SubResource("Theme_50fht")
@@ -355,23 +361,29 @@ size_flags_vertical = 8
 theme_override_constants/separation = 16
 
 [node name="HealthChunk1" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=165496681]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 300)
 layout_mode = 2
 theme = ExtResource("22_t1t22")
+max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
 [node name="HealthChunk2" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1545648845]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 300)
 layout_mode = 2
 theme = ExtResource("22_t1t22")
+max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
 [node name="HealthChunk3" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2082941021]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 300)
 layout_mode = 2
 theme = ExtResource("22_t1t22")
+max_value = 1.0
 fill_mode = 3
 show_percentage = false
 

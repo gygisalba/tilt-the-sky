@@ -26,5 +26,5 @@ func _try_damage(hitbox: Hitbox) -> void:
 	hitboxes_hit.append(hitbox)
 
 	invincibility_timer.start()
-	healthComponent.decrease(hitbox.damage)
+	healthComponent.damage(hitbox.damage_instance)
 	hurtbox_hit.emit(hitbox)
