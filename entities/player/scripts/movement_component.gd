@@ -7,10 +7,11 @@ class_name MovementComponent
 @export var player_state: PlayerStateComponent
 @export var jump: JumpComponent
 @export var speed_modifier: MovementSpeedModifierComponent
+@onready var target_lock: TargetLockComponent = %TargetLockComponent
 
 @export_category("Movement")
-@export var base_speed := 25.0
-@export var acceleration := 80.0
+@export var base_speed := 20.0
+@export var acceleration := 70.0
 @export var deceleration := 100.0
 
 @export_category("Air Movement")
@@ -50,7 +51,7 @@ func _physics_process(delta: float) -> void:
 		delta
 	)
 
-	if player_state.is_player_state(
+	if player_state.is_state(
 		PlayerStateComponent.PlayerState.IDLE
 	):
 		get_move_input(delta)
@@ -92,11 +93,12 @@ func get_move_input(delta: float) -> void:
 
 		var target_yaw := atan2(dir.x, dir.z)
 
-		model.rotation.y = lerp_angle(
-			model.rotation.y,
-			target_yaw,
-			1.0 - exp(-10.0 * delta)
-		)
+		if !is_instance_valid(target_lock.target):
+			model.rotation.y = lerp_angle(
+				model.rotation.y,
+				target_yaw,
+				1.0 - exp(-10.0 * delta)
+			)
 
 	var horizontal_velocity := Vector3(
 		player.velocity.x,

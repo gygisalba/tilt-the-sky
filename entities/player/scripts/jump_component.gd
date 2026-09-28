@@ -45,7 +45,7 @@ func handle_jumping(on_floor: bool, delta: float) -> void:
 
 	jump(on_floor)
 
-	if !on_floor and !player_state.is_player_state(PlayerStateComponent.PlayerState.MANTLING):
+	if !on_floor:
 		if player.velocity.y > 0.0:
 			var gravity := (
 				double_jump_gravity
@@ -68,7 +68,7 @@ func jump(on_floor: bool) -> void:
 
 	# Ground / Coyote jump
 	if coyote_timer > 0.0:
-		var was_sliding := player_state.is_player_state(
+		var was_sliding := player_state.is_state(
 			PlayerStateComponent.PlayerState.SLIDING
 		)
 

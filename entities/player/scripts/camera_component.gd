@@ -1,51 +1,76 @@
 extends Node
 class_name CameraComponent
 
-@export var camera : PhantomCamera3D
-@export var camera_pivot : Node3D
-@export var model : Node3D
+@onready var camera_pivot: Node3D = %CameraPivot
+@onready var camera: PhantomCamera3D = %PhantomCamera3D
+@onready var model: IzumiModel = %Model
+@onready var camera_target: Node3D = %CameraTarget
+@onready var target_lock: TargetLockComponent = %TargetLockComponent
 
-@export_range(0.0, 1.0) var mouse_sensitivity := 0.04
-@export var tilt_limit := deg_to_rad(75)
+@export_category("Mouse Look")
+@export var look_distance := 4.0
+@export var look_smoothing := 10.0
+@export var mouse_deadzone := 0.05
 
-@export var min_zoom := 0.5
-@export var max_zoom := 5.0
-@export var zoom_speed := 10.0
-@export var zoom_increment := 0.1
-
-@export var zoom_target := 1.0
-
-func _ready() -> void:
-	zoom_target = camera.get_spring_length()
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
-		return
-	
-	handle_rotation(event)
-	handle_zoom(event)
-
-func handle_rotation(event: InputEvent) -> void:
-	if event is not InputEventMouseMotion:
-		return
-	
-	var current_rotation = camera.get_third_person_rotation()
-	
-	var target_pitch = current_rotation.x - event.relative.y * mouse_sensitivity * 0.1
-	var target_yaw   = current_rotation.y - event.relative.x * mouse_sensitivity * 0.1
-	
-	target_pitch = clamp(target_pitch, deg_to_rad(-89.0), deg_to_rad(89.0))
-	
-	var target_rotation = Vector3(target_pitch, target_yaw, 0.0)
-	camera.set_third_person_rotation(target_rotation)
-
-func handle_zoom(event: InputEvent) -> void:
-	if event.is_action_pressed("camera_zoom_in"):
-		zoom_target =  clampf((zoom_target - zoom_increment), min_zoom, max_zoom)
-	elif event.is_action_pressed("camera_zoom_out"):
-		zoom_target =  clampf((zoom_target + zoom_increment), min_zoom, max_zoom)
+@export_category("Target Follow")
+@export var rotation_speed := 12.0
+var following_target := false
 
 func _process(delta: float) -> void:
-	var spring_length = camera.get_spring_length()
-	camera.set_spring_length(lerpf(spring_length, zoom_target, zoom_speed * delta))
+	if following_target:
+		_handle_follow(delta)
+	
+	if is_instance_valid(target_lock.target):
+		return
+	
+	var viewport_size := get_viewport().get_visible_rect().size
+	var mouse_position := get_viewport().get_mouse_position()
+
+	var screen_center := viewport_size * 0.5
+	var mouse_offset := mouse_position - screen_center
+
+	var normalized_offset := Vector2(
+		mouse_offset.x / screen_center.x,
+		mouse_offset.y / screen_center.y
+	)
+
+	if normalized_offset.length() < mouse_deadzone:
+		normalized_offset = Vector2.ZERO
+
+	normalized_offset = normalized_offset.limit_length(1.0)
+
+	var target_offset := Vector3(
+		normalized_offset.x,
+		0.0,
+		normalized_offset.y
+	) * look_distance
+
+	var desired_position := player_position() + target_offset
+
+	camera_target.global_position = camera_target.global_position.lerp(
+		desired_position,
+		1.0 - exp(-look_smoothing * delta)
+	)
+	
+func _handle_follow(delta: float) -> void:
+	var direction := camera_target.global_position - model.global_position
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		return
+
+	direction = direction.normalized()
+
+	var target_rotation := atan2(direction.x, direction.z)
+
+	model.rotation.y = lerp_angle(
+		model.rotation.y,
+		target_rotation,
+		rotation_speed * delta
+	)
+	
+func player_position() -> Vector3:
+	return model.global_position
+
+func set_look_at_target(state: bool) -> void:
+	following_target = state

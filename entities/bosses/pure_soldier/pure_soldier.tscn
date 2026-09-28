@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://osw516b546pt"]
+
+[ext_resource type="Script" uid="uid://d3vkryj65wcsa" path="res://entities/bosses/pure_soldier/pure_soldier.gd" id="1_t241k"]
+[ext_resource type="PackedScene" uid="uid://c71r4s76o7tic" path="res://entities/common/scenes/sparks_emitter.tscn" id="2_adogm"]
+[ext_resource type="Script" uid="uid://dlei2wuc8hlb7" path="res://entities/player/scripts/particles_on_hurt_component.gd" id="3_7np0a"]
+[ext_resource type="PackedScene" uid="uid://2uheb5mydivy" path="res://entities/common/components/hurtbox/hurtbox.tscn" id="3_550bg"]
+[ext_resource type="Script" uid="uid://dj7n4yaimkok2" path="res://entities/bosses/common/boss_moveset_controller.gd" id="4_1bgb0"]
+[ext_resource type="Script" uid="uid://bi42xvwdhfhyq" path="res://entities/bosses/common/boss_state_controller.gd" id="4_6ehsg"]
+[ext_resource type="Script" uid="uid://lg0megdaotlh" path="res://entities/bosses/common/boss_death_component.gd" id="5_y0olf"]
+[ext_resource type="Script" uid="uid://d3m60pwowjhsc" path="res://entities/bosses/common/poise/poise_component.gd" id="6_jp8mt"]
+[ext_resource type="Script" uid="uid://fskgl7ceqcrn" path="res://entities/bosses/common/boss_health/boss_health_component.gd" id="6_t241k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yf5fn"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[node name="PureSoldier" type="CharacterBody3D" unique_id=2111156274]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_t241k")
+boss_id = &"pure_soldier"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250316330]
+shape = SubResource("CapsuleShape3D_yf5fn")
+
+[node name="EvilSphere" type="CSGSphere3D" parent="." unique_id=167017077]
+
+[node name="Hurtbox" parent="." unique_id=923501376 node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_550bg")]
+collision_layer = 4
+healthComponent = NodePath("../Components/BossHealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=150151617]
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="Components" type="Node" parent="." unique_id=782427936]
+
+[node name="ParticlesOnHurtComponent" type="Node" parent="Components" unique_id=839287423 node_paths=PackedStringArray("health")]
+script = ExtResource("3_7np0a")
+health = NodePath("../BossHealthComponent")
+particles = ExtResource("2_adogm")
+
+[node name="BossDeathComponent" type="Node" parent="Components" unique_id=119824038 node_paths=PackedStringArray("health")]
+script = ExtResource("5_y0olf")
+health = NodePath("../BossHealthComponent")
+
+[node name="PoiseComponent" type="Node" parent="Components" unique_id=1049370795]
+script = ExtResource("6_jp8mt")
+
+[node name="BossHealthComponent" type="Node" parent="Components" unique_id=1027031696]
+script = ExtResource("6_t241k")
+max_resource = 3.0
+
+[node name="BossMovesetController" type="Node" parent="." unique_id=1445894284]
+script = ExtResource("4_1bgb0")
+
+[node name="BossStateController" type="Node" parent="." unique_id=316893497]
+script = ExtResource("4_6ehsg")

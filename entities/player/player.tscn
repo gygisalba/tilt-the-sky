@@ -7,17 +7,23 @@
 [ext_resource type="PackedScene" uid="uid://bknagecykykub" path="res://entities/player/assets/izumi.scn" id="2_yqrof"]
 [ext_resource type="Script" uid="uid://d24yf8eot58mj" path="res://entities/player/scripts/camera_component.gd" id="3_8fjmc"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_fkugw"]
-[ext_resource type="PackedScene" uid="uid://2uheb5mydivy" path="res://entities/common/hurtbox/hurtbox.tscn" id="3_we0b7"]
+[ext_resource type="PackedScene" uid="uid://2uheb5mydivy" path="res://entities/common/components/hurtbox/hurtbox.tscn" id="3_we0b7"]
 [ext_resource type="Script" uid="uid://bhh1j88xsf1nh" path="res://entities/player/scripts/movement_speed_modifier_component.gd" id="3_wvtmh"]
 [ext_resource type="Script" uid="uid://bpanulkmce1k5" path="res://entities/player/scripts/jump_component.gd" id="4_7thud"]
 [ext_resource type="Script" uid="uid://bs7t2n2cah5ix" path="res://entities/player/scripts/player_state_component.gd" id="4_qiwj3"]
 [ext_resource type="Script" uid="uid://fk5wh71mvugw" path="res://entities/player/scripts/slide_component.gd" id="6_bectd"]
 [ext_resource type="Script" uid="uid://4c1vfxmatr5a" path="res://entities/player/scripts/dash_component.gd" id="6_j3ovn"]
+[ext_resource type="PackedScene" uid="uid://bvqwnm14p1ogf" path="res://entities/common/components/hitbox/hitbox.tscn" id="6_t1t22"]
 [ext_resource type="Script" uid="uid://dk28pf187i2k7" path="res://entities/common/scripts/health_component/health_component.gd" id="11_afbqv"]
 [ext_resource type="Script" uid="uid://jgceaiyogkns" path="res://entities/common/scripts/stamina_component/stamina_component.gd" id="12_gx6sm"]
+[ext_resource type="Script" uid="uid://brlj2y6fhndkc" path="res://entities/player/scripts/attacker_component.gd" id="13_we0b7"]
+[ext_resource type="Script" uid="uid://coidtqdley7x2" path="res://entities/player/scripts/attacker_state_component.gd" id="15_eyb6c"]
 [ext_resource type="Theme" uid="uid://bwf5joplin0n8" path="res://ui/themes/loading_bar.tres" id="16_3wlsy"]
 [ext_resource type="Theme" uid="uid://c7jdgppvo803a" path="res://ui/themes/label.tres" id="16_b2kln"]
+[ext_resource type="Script" uid="uid://0q00jtnn2m5e" path="res://entities/player/scripts/target_lock_component.gd" id="16_t1t22"]
 [ext_resource type="Script" uid="uid://7g528kcx1amd" path="res://ui/hud/scripts/stat_ui_controller.gd" id="16_yqrof"]
+[ext_resource type="FontFile" uid="uid://c17rw7ovb0awq" path="res://ui/assets/fonts/Cascadia_Mono/static/CascadiaMono-ExtraLight.ttf" id="21_ghoj8"]
+[ext_resource type="Theme" uid="uid://bf8b1dj0w31ia" path="res://ui/themes/boss_hp.tres" id="22_t1t22"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 radius = 0.23388672
@@ -27,6 +33,9 @@ height = 2.25
 radius = 0.99658203
 height = 4.5356445
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(1.5, 1, 2)
+
 [sub_resource type="Resource" id="Resource_8fjmc"]
 script = ExtResource("3_fkugw")
 
@@ -35,6 +44,29 @@ bg_color = Color(0.09239706, 0.09239707, 0.092397, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wlsy"]
 bg_color = Color(0.27459186, 0.6935326, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghoj8"]
+bg_color = Color(0.12591082, 0.12591085, 0.12591076, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="Theme" id="Theme_221hk"]
+Panel/styles/panel = SubResource("StyleBoxFlat_ghoj8")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d0u6y"]
+bg_color = Color(0.033853274, 0.03385329, 0.033853233, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gngh"]
+bg_color = Color(0.10515482, 0.19139114, 0.2944439, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="Theme" id="Theme_50fht"]
+ProgressBar/fonts/font = ExtResource("21_ghoj8")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_d0u6y")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_3gngh")
 
 [node name="Player" type="CharacterBody3D" unique_id=74201403 node_paths=PackedStringArray("model")]
 collision_mask = 54
@@ -57,7 +89,13 @@ healthComponent = NodePath("../Components/HealthComponent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0007510185, 2.2720406, -0.004111171)
 shape = SubResource("CapsuleShape3D_we0b7")
 
+[node name="CameraTarget" type="Node3D" parent="." unique_id=1810792066]
+unique_name_in_owner = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CameraTarget" unique_id=1965980614]
+
 [node name="Model" parent="." unique_id=1949507382 instance=ExtResource("2_yqrof")]
+unique_name_in_owner = true
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -1.2743042, 0)
 
 [node name="Raycasts" type="Node3D" parent="Model" unique_id=2138788530]
@@ -72,6 +110,18 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.030390203, 1.3329953, 0.4240409)
 target_position = Vector3(0, 0, 1)
 collision_mask = 2
+
+[node name="AttackHitbox" parent="Model" unique_id=135541384 instance=ExtResource("6_t1t22")]
+unique_name_in_owner = true
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.5486083, 4.195002)
+collision_layer = 1
+collision_mask = 4
+damage = 25.0
+
+[node name="AttackCollider" type="CollisionShape3D" parent="Model/AttackHitbox" unique_id=1622328254]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+shape = SubResource("BoxShape3D_g4v7s")
 
 [node name="Components" type="Node" parent="." unique_id=1563754300]
 
@@ -105,14 +155,13 @@ player = NodePath("../..")
 camera = NodePath("../../CameraGroup/CameraPivot/Camera3D")
 state = NodePath("../PlayerStateComponent")
 
-[node name="CameraComponent" type="Node" parent="Components" unique_id=633656761 node_paths=PackedStringArray("camera", "camera_pivot")]
+[node name="CameraComponent" type="Node" parent="Components" unique_id=633656761]
+unique_name_in_owner = true
 script = ExtResource("3_8fjmc")
-camera = NodePath("../../CameraGroup/CameraPivot/PhantomCamera3D")
-camera_pivot = NodePath("../../CameraGroup/CameraPivot")
 
 [node name="PlayerStateComponent" type="Node" parent="Components" unique_id=58606190 node_paths=PackedStringArray("state_label")]
 script = ExtResource("4_qiwj3")
-state_label = NodePath("../../PlayerUI/TopPanel/MarginContainer/StateLabel")
+state_label = NodePath("../../PlayerUI/TopPanel/MarginContainer/HBoxContainer/PlayerStateLabel")
 
 [node name="HealthComponent" type="Node" parent="Components" unique_id=1569244962]
 unique_name_in_owner = true
@@ -121,13 +170,32 @@ script = ExtResource("11_afbqv")
 [node name="StaminaComponent" type="Node" parent="Components" unique_id=1175043731]
 script = ExtResource("12_gx6sm")
 
+[node name="AttackerComponent" type="Node" parent="Components" unique_id=1437867338]
+script = ExtResource("13_we0b7")
+
+[node name="AttackActiveTimer" type="Timer" parent="Components/AttackerComponent" unique_id=987455784]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
+[node name="AttackerStateComponent" type="Node" parent="Components/AttackerComponent" unique_id=1338836051 node_paths=PackedStringArray("state_label")]
+unique_name_in_owner = true
+script = ExtResource("15_eyb6c")
+state_label = NodePath("../../../PlayerUI/TopPanel/MarginContainer/HBoxContainer/AttackingStateLabel")
+
+[node name="TargetLockComponent" type="Node" parent="Components" unique_id=68668660]
+unique_name_in_owner = true
+script = ExtResource("16_t1t22")
+
 [node name="CameraGroup" type="Node" parent="." unique_id=1406050078]
 
 [node name="CameraPivot" type="Node3D" parent="CameraGroup" unique_id=462089270]
+unique_name_in_owner = true
 
 [node name="Camera3D" type="Camera3D" parent="CameraGroup/CameraPivot" unique_id=1398001316]
+unique_name_in_owner = true
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 2.9619715, 2.6730196)
+transform = Transform3D(1, 0, 0, 0, 1.7881393e-07, 0.99999994, 0, -0.99999994, 1.7881393e-07, 0, 8, 5.364418e-07)
 top_level = true
 fov = 90.0
 
@@ -138,30 +206,30 @@ script = ExtResource("1_sglur")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera3D" type="Node3D" parent="CameraGroup/CameraPivot" unique_id=1753805340 node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 0.8910065, 0.4539905, 0, -0.4539905, 0.8910065, 0, 2.9619715, 2.6730196)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.7881393e-07, 0.99999994, 0, -0.99999994, 1.7881393e-07, 0, 8, 5.364418e-07)
+top_level = true
 script = ExtResource("2_bls4j")
-follow_mode = 6
-follow_target = NodePath("../../..")
+follow_mode = 5
+follow_target = NodePath("../../../CameraTarget")
 tween_resource = SubResource("Resource_8fjmc")
-follow_offset = Vector3(0, 1.6, 0)
+follow_offset = Vector3(0, 5, 0)
 follow_damping = true
 follow_distance = 3.0
-vertical_rotation_offset = 0.47123889803846897
+auto_follow_distance = true
+vertical_rotation_offset = 1.5707963267948966
 spring_length = 3.0
 collision_mask = 2
 align_transform_with_view = Callable()
 align_position_with_view = Callable()
-align_rotation_with_view = Callable()
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="PlayerUI" type="CanvasLayer" parent="." unique_id=1534802610]
 unique_name_in_owner = true
 
 [node name="TopPanel" type="Panel" parent="PlayerUI" unique_id=1823268565]
-custom_minimum_size = Vector2(0, 100)
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
+custom_minimum_size = Vector2(600, 100)
+offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gx6sm")
 
 [node name="MarginContainer" type="MarginContainer" parent="PlayerUI/TopPanel" unique_id=207772620]
@@ -176,25 +244,35 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="StateLabel" type="RichTextLabel" parent="PlayerUI/TopPanel/MarginContainer" unique_id=192157568]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerUI/TopPanel/MarginContainer" unique_id=852635642]
+layout_mode = 2
+
+[node name="PlayerStateLabel" type="RichTextLabel" parent="PlayerUI/TopPanel/MarginContainer/HBoxContainer" unique_id=192157568]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
-text = "STATE: "
+text = "State: 0"
 vertical_alignment = 1
 
-[node name="BottomPanel" type="Panel" parent="PlayerUI" unique_id=157490109]
-custom_minimum_size = Vector2(0, 100)
-anchors_preset = 12
+[node name="AttackingStateLabel" type="RichTextLabel" parent="PlayerUI/TopPanel/MarginContainer/HBoxContainer" unique_id=577998376]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "State: 0"
+vertical_alignment = 1
+
+[node name="PlayerStatsPanel" type="Panel" parent="PlayerUI" unique_id=157490109]
+custom_minimum_size = Vector2(500, 100)
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -107.0
-grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gx6sm")
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerUI/BottomPanel" unique_id=124682245]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerUI/PlayerStatsPanel" unique_id=124682245]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -206,18 +284,12 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerUI/BottomPanel/MarginContainer" unique_id=1409982635]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerUI/PlayerStatsPanel/MarginContainer" unique_id=1409982635]
 layout_mode = 2
 theme_override_constants/separation = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="PlayerUI/BottomPanel/MarginContainer/VBoxContainer" unique_id=97767563]
-layout_mode = 2
-size_flags_horizontal = 0
-theme = ExtResource("16_b2kln")
-text = "                         INTEGRITY"
-
-[node name="HealthBar" type="ProgressBar" parent="PlayerUI/BottomPanel/MarginContainer/VBoxContainer" unique_id=497501190]
+[node name="HealthBar" type="ProgressBar" parent="PlayerUI/PlayerStatsPanel/MarginContainer/VBoxContainer" unique_id=497501190]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 75)
 layout_mode = 2
@@ -226,6 +298,82 @@ size_flags_vertical = 4
 theme = ExtResource("16_3wlsy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3wlsy")
 value = 100.0
+
+[node name="Label" type="Label" parent="PlayerUI/PlayerStatsPanel/MarginContainer/VBoxContainer/HealthBar" unique_id=97767563]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35700002
+anchor_right = 0.643
+anchor_bottom = 0.25300002
+offset_left = -0.1000061
+offset_right = 0.099990845
+offset_bottom = 0.024997711
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme = ExtResource("16_b2kln")
+theme_override_font_sizes/font_size = 12
+text = "INTEGRITY"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BossPanel" type="Panel" parent="PlayerUI" unique_id=127710228]
+custom_minimum_size = Vector2(100, 300)
+anchors_preset = -1
+anchor_left = 0.9480001
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 99.83984
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_221hk")
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerUI/BossPanel" unique_id=1157324316]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerUI/BossPanel/MarginContainer" unique_id=292185337]
+layout_mode = 2
+
+[node name="PoiseBar" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer" unique_id=866403374]
+custom_minimum_size = Vector2(0, 750)
+layout_mode = 2
+theme = SubResource("Theme_50fht")
+fill_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer" unique_id=164940705]
+custom_minimum_size = Vector2(75, 300)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 16
+
+[node name="HealthChunk1" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=165496681]
+custom_minimum_size = Vector2(15, 300)
+layout_mode = 2
+theme = ExtResource("22_t1t22")
+fill_mode = 3
+show_percentage = false
+
+[node name="HealthChunk2" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1545648845]
+custom_minimum_size = Vector2(15, 300)
+layout_mode = 2
+theme = ExtResource("22_t1t22")
+fill_mode = 3
+show_percentage = false
+
+[node name="HealthChunk3" type="ProgressBar" parent="PlayerUI/BossPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2082941021]
+custom_minimum_size = Vector2(15, 300)
+layout_mode = 2
+theme = ExtResource("22_t1t22")
+fill_mode = 3
+show_percentage = false
 
 [node name="StatUIController" type="Node" parent="PlayerUI" unique_id=743968024]
 script = ExtResource("16_yqrof")

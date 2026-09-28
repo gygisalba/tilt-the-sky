@@ -62,7 +62,7 @@ func _physics_process(delta: float) -> void:
 	was_on_floor = on_floor
 
 func is_sliding() -> bool:
-	return state.is_player_state(
+	return state.is_state(
 		PlayerStateComponent.PlayerState.SLIDING
 	)
 
@@ -80,7 +80,7 @@ func start_slide() -> void:
 	if horizontal_velocity.length_squared() < 0.01:
 		return
 
-	state.set_player_state(
+	state.set_state(
 		PlayerStateComponent.PlayerState.SLIDING
 	)
 
@@ -266,6 +266,6 @@ func stop_slide() -> void:
 	if not is_sliding():
 		return
 
-	state.set_player_state(
+	state.set_state(
 		PlayerStateComponent.PlayerState.IDLE
 	)

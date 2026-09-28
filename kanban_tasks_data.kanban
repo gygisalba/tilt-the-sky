@@ -13,8 +13,10 @@
 			"tasks": [
 				"9b58edea-ab7d-45ba-86df-db714187ffc8",
 				"24c73062-7721-40f3-a505-ec53a9a030b0",
-				"dff8db29-ec98-400d-81c3-e0102be86311",
-				"f0337599-56f1-4955-a5ae-213535b39276"
+				"798d73e3-bbc4-440a-9ee3-20aa89ea780c",
+				"a5a47d54-1c04-4f0d-807e-a4812028e530",
+				"23ac6a2a-37f8-4ed9-a207-28e78e0e5d4e",
+				"c51d04a2-8b55-462e-b565-b7d27b9b5aae"
 			]
 		},
 		{
@@ -27,7 +29,9 @@
 			"title": "Done",
 			"tasks": [
 				"e7bf9f33-283a-4504-a34e-3de4f76fc5ca",
-				"3b189664-cb7e-4e2f-86eb-68ee4385e69e"
+				"3b189664-cb7e-4e2f-86eb-68ee4385e69e",
+				"dff8db29-ec98-400d-81c3-e0102be86311",
+				"f0337599-56f1-4955-a5ae-213535b39276"
 			]
 		}
 	],
@@ -70,6 +74,34 @@
 		{
 			"uuid": "3b189664-cb7e-4e2f-86eb-68ee4385e69e",
 			"title": "Loading Screen",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "798d73e3-bbc4-440a-9ee3-20aa89ea780c",
+			"title": "Slideable Attacks",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "a5a47d54-1c04-4f0d-807e-a4812028e530",
+			"title": "Jumpable Attacks",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "23ac6a2a-37f8-4ed9-a207-28e78e0e5d4e",
+			"title": "Parriable Attacks",
+			"description": "",
+			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
+			"steps": []
+		},
+		{
+			"uuid": "c51d04a2-8b55-462e-b565-b7d27b9b5aae",
+			"title": "Quickdraw Katana for Bonus Damage",
 			"description": "",
 			"category": "f9bf3c31-1159-4b38-bbc6-b5f583fd5761",
 			"steps": []

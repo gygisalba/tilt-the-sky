@@ -42,7 +42,7 @@ func try_dash() -> void:
 	if is_dashing:
 		return
 
-	if player_state.is_player_state(PlayerStateComponent.PlayerState.BUSY):
+	if player_state.is_state(PlayerStateComponent.PlayerState.BUSY):
 		return
 
 	var direction := get_dash_direction()

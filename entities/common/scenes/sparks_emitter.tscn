@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c71r4s76o7tic"]
+
+[ext_resource type="Script" uid="uid://c8ycybvfewfdr" path="res://entities/common/scripts/single_use_particles.gd" id="1_pgctm"]
+
+[sub_resource type="Curve" id="Curve_adogm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.011235952), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fcnqv"]
+curve = SubResource("Curve_adogm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_57qmd"]
+lifetime_randomness = 0.77
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_curve = SubResource("CurveTexture_fcnqv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3gngh"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.8627451, 0.05882353, 1)
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_d0u6y"]
+material = SubResource("StandardMaterial3D_3gngh")
+size = Vector2(0.01, 0.2)
+
+[node name="SparksEmitter" type="GPUParticles3D" unique_id=1064534108]
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_57qmd")
+draw_pass_1 = SubResource("QuadMesh_d0u6y")
+script = ExtResource("1_pgctm")

@@ -1,0 +1,2 @@
+extends HealthComponent
+class_name BossHealthComponent
