@@ -36,9 +36,10 @@ shape = SubResource("CapsuleShape3D_g4v7s")
 
 [node name="Components" type="Node" parent="." unique_id=782427936]
 
-[node name="ParticlesOnHurtComponent" type="Node" parent="Components" unique_id=839287423 node_paths=PackedStringArray("health")]
+[node name="ParticlesOnResourceChangeComponent" type="Node" parent="Components" unique_id=839287423 node_paths=PackedStringArray("character", "resources")]
 script = ExtResource("3_7np0a")
-health = NodePath("../BossHealthComponent")
+character = NodePath("../..")
+resources = [NodePath("../BossPoiseComponent"), NodePath("../BossHealthComponent")]
 particles = ExtResource("2_adogm")
 
 [node name="BossDeathComponent" type="Node" parent="Components" unique_id=119824038 node_paths=PackedStringArray("health")]

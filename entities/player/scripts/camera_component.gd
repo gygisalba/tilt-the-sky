@@ -4,7 +4,8 @@ class_name CameraComponent
 @onready var camera_pivot: Node3D = %CameraPivot
 @onready var camera: PhantomCamera3D = %PhantomCamera3D
 @onready var model: IzumiModel = %Model
-@onready var camera_target: Node3D = %CameraTarget
+@onready var camera_focus: Node3D = %CameraFocus
+@onready var target_lock_camera_focus: Node3D = %TargetLockCameraFocus
 @onready var target_lock: TargetLockComponent = %TargetLockComponent
 
 @export_category("Mouse Look")
@@ -14,24 +15,29 @@ class_name CameraComponent
 
 @export_category("Target Follow")
 @export var rotation_speed := 12.0
-var following_target := false
+var following_target : Node3D
 
 func _process(delta: float) -> void:
-	if following_target:
-		_handle_follow(delta)
-	
-	if is_instance_valid(target_lock.target):
+	if is_instance_valid(following_target):
+		_handle_follow(delta, following_target)
+
+	var viewport := get_viewport()
+	var cam := viewport.get_camera_3d() # the real Camera3D PhantomCamera drives
+	if cam == null:
 		return
-	
-	var viewport_size := get_viewport().get_visible_rect().size
-	var mouse_position := get_viewport().get_mouse_position()
 
-	var screen_center := viewport_size * 0.5
-	var mouse_offset := mouse_position - screen_center
+	var viewport_size := viewport.get_visible_rect().size
+	var mouse_position := viewport.get_mouse_position()
 
+	# Where the player appears on screen (not necessarily the center when locked on)
+	var player_screen_pos := cam.unproject_position(player_position())
+	var mouse_offset := mouse_position - player_screen_pos
+
+	# Normalize by half the screen size so the range is consistent
+	var half_size := viewport_size * 0.5
 	var normalized_offset := Vector2(
-		mouse_offset.x / screen_center.x,
-		mouse_offset.y / screen_center.y
+		mouse_offset.x / half_size.x,
+		mouse_offset.y / half_size.y
 	)
 
 	if normalized_offset.length() < mouse_deadzone:
@@ -47,13 +53,13 @@ func _process(delta: float) -> void:
 
 	var desired_position := player_position() + target_offset
 
-	camera_target.global_position = camera_target.global_position.lerp(
+	camera_focus.global_position = camera_focus.global_position.lerp(
 		desired_position,
 		1.0 - exp(-look_smoothing * delta)
 	)
 	
-func _handle_follow(delta: float) -> void:
-	var direction := camera_target.global_position - model.global_position
+func _handle_follow(delta: float, target: Node3D) -> void:
+	var direction := target.global_position - model.global_position
 	direction.y = 0.0
 
 	if direction.length_squared() <= 0.001:
@@ -72,5 +78,5 @@ func _handle_follow(delta: float) -> void:
 func player_position() -> Vector3:
 	return model.global_position
 
-func set_look_at_target(state: bool) -> void:
-	following_target = state
+func set_look_at_target(target: Node3D) -> void:
+	following_target = target

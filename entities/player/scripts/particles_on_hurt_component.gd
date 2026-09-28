@@ -1,18 +1,19 @@
 extends Node
-class_name ParticlesOnHurtComponent
+class_name ParticlesOnResourceChangeomponent
 
-@onready var pure_soldier: CharacterBody3D = $"../.."
-@export var health : HealthComponent
+@export var character : Node3D
+@export var resources : Array[ResourceComponent]
 @export var particles : PackedScene
 
 func _ready() -> void:
-	health.resource_changed.connect(_on_health_changed)
+	for resource in resources:
+		resource.resource_changed.connect(_on_resource_changed)
 
-func _on_health_changed(update: ResourceUpdate) -> void:
+func _on_resource_changed(update: ResourceUpdate) -> void:
 	if update.is_increase:
 		return
 	
 	var fx : GPUParticles3D = particles.instantiate()
-	pure_soldier.add_child(fx)
-	fx.global_position = pure_soldier.global_position
+	character.add_child(fx)
+	fx.global_position = character.global_position
 	

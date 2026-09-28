@@ -90,10 +90,16 @@ healthComponent = NodePath("../Components/HealthComponent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0007510185, 2.2720406, -0.004111171)
 shape = SubResource("CapsuleShape3D_we0b7")
 
-[node name="CameraTarget" type="Node3D" parent="." unique_id=1810792066]
+[node name="CameraFocus" type="Node3D" parent="." unique_id=1810792066]
 unique_name_in_owner = true
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="CameraTarget" unique_id=1965980614]
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CameraFocus" unique_id=1965980614]
+
+[node name="TargetLockCameraFocus" type="Node3D" parent="." unique_id=1956401037]
+unique_name_in_owner = true
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="TargetLockCameraFocus" unique_id=1089435528]
+radius = 0.2
 
 [node name="Model" parent="." unique_id=1949507382 instance=ExtResource("2_yqrof")]
 unique_name_in_owner = true
@@ -213,7 +219,7 @@ transform = Transform3D(1, 0, 0, 0, 1.7881393e-07, 0.99999994, 0, -0.99999994, 1
 top_level = true
 script = ExtResource("2_bls4j")
 follow_mode = 5
-follow_target = NodePath("../../../CameraTarget")
+follow_target = NodePath("../../../CameraFocus")
 tween_resource = SubResource("Resource_8fjmc")
 follow_offset = Vector3(0, 5, 0)
 follow_damping = true
