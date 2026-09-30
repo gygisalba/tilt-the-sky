@@ -12,7 +12,9 @@ func damage(damage: DamageInstance) -> void:
 		boss_poise.decrease(damage.poise_damage)
 	else:
 		super(damage)
-		boss_poise.resource = boss_poise.max_resource
+		if has_health_remaining():
+			boss_poise.resource = boss_poise.max_resource
+			
 		Engine.time_scale = slow_factor
 		await get_tree().create_timer(slow_duration, true, false, true).timeout
 		Engine.time_scale = 1.0

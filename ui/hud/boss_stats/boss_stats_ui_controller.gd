@@ -20,8 +20,8 @@ func _ready() -> void:
 	BossManager.boss_registered.connect(_on_boss_registered)
 	health_tweens.resize(health_chunks.size())
 
-func _on_boss_registered() -> void:
-	var boss = BossManager.current_boss
+func _on_boss_registered(_boss: Boss) -> void:
+	var boss = _boss
 
 	boss.boss_health.resource_changed.connect(_on_health_changed)
 	boss.boss_poise.resource_changed.connect(_on_poise_changed)

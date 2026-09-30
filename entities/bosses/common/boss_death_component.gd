@@ -1,8 +1,10 @@
 extends DeathComponent
 class_name BossDeathComponent
-@onready var pure_soldier: CharacterBody3D = $"../.."
+
+@onready var boss : Node3D = $"../.."
+@onready var boss_moveset_controller: BossMovesetController = %BossMovesetController
 
 func _on_death() -> void:
 	super()
-	pure_soldier.queue_free()
+	boss_moveset_controller.stop()
 	

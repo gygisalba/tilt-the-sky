@@ -1,2 +1,2 @@
-extends Node
+extends StateComponent
 class_name BossStateController

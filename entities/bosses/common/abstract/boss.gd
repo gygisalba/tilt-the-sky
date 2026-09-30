@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Node3D
 class_name Boss
 
 @export var boss_id : StringName

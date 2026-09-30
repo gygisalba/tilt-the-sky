@@ -14,7 +14,7 @@ class_name CameraComponent
 @export var mouse_deadzone := 0.05
 
 @export_category("Target Follow")
-@export var rotation_speed := 12.0
+@export var rotation_speed := 18.0
 var following_target : Node3D
 
 func _process(delta: float) -> void:

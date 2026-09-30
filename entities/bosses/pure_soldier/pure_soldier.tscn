@@ -9,21 +9,15 @@
 [ext_resource type="Script" uid="uid://lg0megdaotlh" path="res://entities/bosses/common/boss_death_component.gd" id="5_y0olf"]
 [ext_resource type="Script" uid="uid://d3m60pwowjhsc" path="res://entities/bosses/common/poise/poise_component.gd" id="6_jp8mt"]
 [ext_resource type="Script" uid="uid://fskgl7ceqcrn" path="res://entities/bosses/common/boss_health/boss_health_component.gd" id="6_t241k"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yf5fn"]
+[ext_resource type="Script" uid="uid://d4kiiyn31sg8x" path="res://entities/bosses/pure_soldier/moves/swing_at.gd" id="9_o5h7e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 
-[node name="PureSoldier" type="CharacterBody3D" unique_id=2111156274 node_paths=PackedStringArray("boss_health", "boss_poise")]
-collision_layer = 4
-collision_mask = 2
+[node name="PureSoldier" type="Node3D" unique_id=518221447 node_paths=PackedStringArray("boss_health", "boss_poise")]
 script = ExtResource("1_t241k")
 boss_id = &"pure_soldier"
 boss_health = NodePath("Components/BossHealthComponent")
 boss_poise = NodePath("Components/BossPoiseComponent")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250316330]
-shape = SubResource("CapsuleShape3D_yf5fn")
 
 [node name="EvilSphere" type="CSGSphere3D" parent="." unique_id=167017077]
 
@@ -56,7 +50,12 @@ script = ExtResource("6_t241k")
 max_resource = 3.0
 
 [node name="BossMovesetController" type="Node" parent="." unique_id=1445894284]
+unique_name_in_owner = true
 script = ExtResource("4_1bgb0")
+
+[node name="SwingAt" type="Node" parent="BossMovesetController" unique_id=2030288426]
+script = ExtResource("9_o5h7e")
+move_id = &"PureSoldierSwingAt"
 
 [node name="BossStateController" type="Node" parent="." unique_id=316893497]
 script = ExtResource("4_6ehsg")
