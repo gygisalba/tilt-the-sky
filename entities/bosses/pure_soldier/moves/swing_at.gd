@@ -1,7 +1,5 @@
 extends BaseBossMoveTargetPlayer
 
-var tween : Tween
-
 func execute() -> void:
 	var player_pos := get_player_pos()
 	var target_pos := Vector3(
@@ -15,6 +13,8 @@ func execute() -> void:
 	
 	tween = create_tween()
 	tween.tween_property(boss, "global_position", target_pos, 0.5)
+	
+	RotationManager.rotate_towards_target(boss, player, 0.1)
 
 func is_valid() -> bool:
 	return get_player_pos().distance_to(boss.global_position) >= 3.0

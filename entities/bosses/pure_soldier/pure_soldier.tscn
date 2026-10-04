@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d3vkryj65wcsa" path="res://entities/bosses/pure_soldier/pure_soldier.gd" id="1_t241k"]
 [ext_resource type="PackedScene" uid="uid://c71r4s76o7tic" path="res://entities/common/scenes/sparks_emitter.tscn" id="2_adogm"]
+[ext_resource type="PackedScene" uid="uid://bknagecykykub" path="res://entities/player/assets/izumi.scn" id="2_u7lhy"]
 [ext_resource type="Script" uid="uid://dlei2wuc8hlb7" path="res://entities/player/scripts/particles_on_hurt_component.gd" id="3_7np0a"]
 [ext_resource type="PackedScene" uid="uid://2uheb5mydivy" path="res://entities/common/components/hurtbox/hurtbox.tscn" id="3_550bg"]
 [ext_resource type="Script" uid="uid://dj7n4yaimkok2" path="res://entities/bosses/common/boss_moveset_controller.gd" id="4_1bgb0"]
@@ -19,9 +20,11 @@ boss_id = &"pure_soldier"
 boss_health = NodePath("Components/BossHealthComponent")
 boss_poise = NodePath("Components/BossPoiseComponent")
 
-[node name="EvilSphere" type="CSGSphere3D" parent="." unique_id=167017077]
+[node name="izumi" parent="." unique_id=1949507382 instance=ExtResource("2_u7lhy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.049794674, 0)
 
 [node name="Hurtbox" parent="." unique_id=923501376 node_paths=PackedStringArray("healthComponent") instance=ExtResource("3_550bg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0658702, 0)
 collision_layer = 4
 healthComponent = NodePath("../Components/BossHealthComponent")
 
@@ -53,9 +56,9 @@ max_resource = 3.0
 unique_name_in_owner = true
 script = ExtResource("4_1bgb0")
 
-[node name="SwingAt" type="Node" parent="BossMovesetController" unique_id=2030288426]
+[node name="MoveToPlayer" type="Node" parent="BossMovesetController" unique_id=2030288426]
 script = ExtResource("9_o5h7e")
-move_id = &"PureSoldierSwingAt"
+move_id = &"PureSoldierMoveToPlayer"
 
 [node name="BossStateController" type="Node" parent="." unique_id=316893497]
 script = ExtResource("4_6ehsg")

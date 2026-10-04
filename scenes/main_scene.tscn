@@ -45,4 +45,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.875, 0)
 height = 19.75
 
 [node name="BaseBoss" parent="." unique_id=1597776665 instance=ExtResource("2_pw63i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1614399, 1.245579, -4.454095)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1614399, 0.08465183, -4.454095)

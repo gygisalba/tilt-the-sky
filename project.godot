@@ -21,6 +21,7 @@ DialogueManager="*uid://c3rodes2l3gxb"
 LoadingManager="*uid://bgtti7snd6uci"
 PlayerManager="*uid://c4c2iuqc4guop"
 BossManager="*uid://dqjrg2uk17r3d"
+RotationManager="*uid://q0a00lwnjh3e"
 
 [display]
 
